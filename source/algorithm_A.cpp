@@ -37,9 +37,106 @@ void algorithm_A(Board board, Player player, int index[]){
     // Here is the random algorithm for your reference, you can delete or comment it.
     srand(time(NULL));
     int row, col;
-    int color = player.get_color();
+    char color = player.get_color();
     
     while(1){
+        if(board.get_cell_color(0,0)==color){
+            if((board.get_cell_color(0,1)!=color && board.get_cell_color(0,1)!='w') ||
+                (board.get_cell_color(1,0)!=color && board.get_cell_color(1,0)!='w'))
+            {
+                row=0;
+                col=0;
+                break;
+            }
+        }
+        if(board.get_cell_color(0,5)==color){
+            if((board.get_cell_color(0,4)!=color && board.get_cell_color(0,4)!='w') ||
+                (board.get_cell_color(1,5)!=color && board.get_cell_color(1,5)!='w'))
+            {
+                row=0;
+                col=5;
+                break;
+            }
+        }
+        if(board.get_cell_color(4,0)==color){
+            if((board.get_cell_color(4,1)!=color && board.get_cell_color(4,1)!='w') ||
+                (board.get_cell_color(3,0)!=color && board.get_cell_color(3,0)!='w'))
+            {
+                row=4;
+                col=0;
+                break;
+            }
+        }
+        if(board.get_cell_color(4,5)==color){
+            if((board.get_cell_color(4,4)!=color && board.get_cell_color(4,4)!='w') ||
+                (board.get_cell_color(3,5)!=color && board.get_cell_color(3,5)!='w'))
+            {
+                row=4;
+                col=5;
+                break;
+            }
+        }
+
+        if(board.get_cell_color(0,0)=='w'){
+            if((board.get_cell_color(0,1)=='w' || board.get_cell_color(0,1)==color) &&
+            (board.get_cell_color(1,0)=='w' || board.get_cell_color(1,0)==color))
+            {
+                row=0;
+                col=0;
+                break;
+            }
+            else if(board.get_orbs_num(0,1)!=2 && board.get_orbs_num(1,0)!=2)
+            {
+                row=0;
+                col=0;
+                break;
+            }
+        }
+        if(board.get_cell_color(0,5)=='w'){
+            if((board.get_cell_color(0,4)=='w' || board.get_cell_color(0,4)==color) &&
+            (board.get_cell_color(1,5)=='w' || board.get_cell_color(1,5)==color))
+            {
+                row=0;
+                col=5;
+                break;
+            }
+            else if(board.get_orbs_num(0,4)!=2 && board.get_orbs_num(1,5)!=2)
+            {
+                row=0;
+                col=5;
+                break;
+            }
+        }
+        if(board.get_cell_color(4,0)=='w'){
+            if((board.get_cell_color(4,1)=='w' || board.get_cell_color(4,1)==color) &&
+            (board.get_cell_color(3,0)=='w' || board.get_cell_color(3,0)==color))
+            {
+                row=4;
+                col=0;
+                break;
+            }
+            else if(board.get_orbs_num(4,1)!=2 && board.get_orbs_num(3,0)!=2)
+            {
+                row=4;
+                col=0;
+                break;
+            }
+        }
+        if(board.get_cell_color(4,5)=='w'){
+            if((board.get_cell_color(4,4)=='w' || board.get_cell_color(4,4)==color) &&
+            (board.get_cell_color(3,5)=='w' || board.get_cell_color(3,5)==color))
+            {
+                row=4;
+                col=5;
+                break;
+            }
+            else if(board.get_orbs_num(4,4)!=2 && board.get_orbs_num(3,5)!=2)
+            {
+                row=4;
+                col=5;
+                break;
+            }
+        }
         row = rand() & 5;
         col = rand() & 6;
         if(board.get_cell_color(row, col) == color || board.get_cell_color(row, col) == 'w') break;
