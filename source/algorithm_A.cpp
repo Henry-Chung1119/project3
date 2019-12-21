@@ -241,7 +241,7 @@ void algorithm_A(Board board, Player player, int index[]){
     while(!find){
         row=rand()%5;
         col=rand()%6;
-        if(board.get_cell_color(row,col)=='w' || board.get_cell_color(row,col)==col)
+        if(board.get_cell_color(row,col)=='w' || board.get_cell_color(row,col)==color)
             find=true;
     }
     index[0] = row;
