@@ -93,7 +93,8 @@ void algorithm_A(Board board, Player player, int index[]){
             col=0;
             find=true;
         }
-        else if(board.get_orbs_num(0,1)!=2 && board.get_orbs_num(1,0)!=2)
+        else if((board.get_cell_color(0,1)!='w' && board.get_cell_color(0,1)!=color && board.get_orbs_num(0,1)!=2) 
+        || (board.get_cell_color(1,0)!='w' && board.get_cell_color(1,0)!=color && board.get_orbs_num(1,0)!=2))
         {
             row=0;
             col=0;
@@ -108,7 +109,8 @@ void algorithm_A(Board board, Player player, int index[]){
             col=5;
             find=true;
         }
-        else if(board.get_orbs_num(0,4)!=2 && board.get_orbs_num(1,5)!=2)
+        else if((board.get_cell_color(0,4)!='w' && board.get_cell_color(0,4)!=color && board.get_orbs_num(0,4)!=2) 
+        || (board.get_cell_color(1,5)!='w' && board.get_cell_color(1,5)!=color && board.get_orbs_num(1,5)!=2))
         {
             row=0;
             col=5;
@@ -123,7 +125,8 @@ void algorithm_A(Board board, Player player, int index[]){
             col=0;
             find=true;
         }
-        else if(board.get_orbs_num(4,1)!=2 && board.get_orbs_num(3,0)!=2)
+        else if((board.get_cell_color(4,1)!='w' && board.get_cell_color(4,1)!=color && board.get_orbs_num(4,1)!=2) 
+        || (board.get_cell_color(3,0)!='w' && board.get_cell_color(3,0)!=color && board.get_orbs_num(3,0)!=2))
         {
             row=4;
             col=0;
@@ -138,7 +141,8 @@ void algorithm_A(Board board, Player player, int index[]){
             col=5;
             find=true;
         }
-        else if(board.get_orbs_num(4,4)!=2 && board.get_orbs_num(3,5)!=2)
+        else if((board.get_cell_color(4,4)!='w' && board.get_cell_color(4,4)!=color && board.get_orbs_num(4,4)!=2) 
+        || (board.get_cell_color(3,5)!='w' && board.get_cell_color(3,5)!=color && board.get_orbs_num(3,5)!=2))
         {
             row=4;
             col=5;
@@ -235,6 +239,41 @@ void algorithm_A(Board board, Player player, int index[]){
                     }
                 }       
                 
+            }
+        }
+    }
+    if(!find){
+        for(int i=0;i<5;i++){
+            for(int j=0;j<6;j++){
+                if(board.get_cell_color(i,j)=='w'){
+                    if(i-1>=0){
+                        if(board.get_cell_color(i-1,j)!='w')
+                            continue;
+                    }
+                    if(i+1<=4){
+                        if(board.get_cell_color(i+1,j)!='w')
+                            continue;
+                    }
+                    if(j-1>=0){
+                        if(board.get_cell_color(i,j-1)!='w')
+                            continue;
+                    }
+                    if(j+1<=5){
+                        if(board.get_cell_color(i,j+1)!='w')
+                            continue;
+                    }
+                    
+                    if(!find){
+                        row=i;
+                        col=j;
+                        find=true;
+                    }
+                    else if(board.get_capacity(i,j)<board.get_capacity(row,col)){
+                        row=i;
+                        col=j;
+                    }
+
+                }
             }
         }
     }
