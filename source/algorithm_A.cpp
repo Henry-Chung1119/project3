@@ -41,14 +41,14 @@ void algorithm_A(Board board, Player player, int index[]){
     int row, col;
     char color = player.get_color();
     bool find = false;
-    int maxorb[5][6]=
+    /*int maxorb[5][6]=
     {   
         1,2,2,2,2,1,
         2,3,3,3,3,2,
         2,3,3,3,3,2,
         2,3,3,3,3,2,
         1,2,2,2,2,1
-    };
+    };*/
     
     if(board.get_cell_color(0,0)==color){
         if((board.get_cell_color(0,1)!=color && board.get_cell_color(0,1)!='w') && board.get_orbs_num(0,1)==2 ||
