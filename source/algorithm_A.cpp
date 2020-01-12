@@ -35,7 +35,9 @@ void algorithm_A(Board board, Player player, int index[]){
 
     //////////// Random Algorithm ////////////
     // Here is the random algorithm for your reference, you can delete or comment it.
-    srand(time(NULL));
+    long long cpu_cycle;
+    asm volatile(".byte 15;.byte 49" : "=A" (cpu_cycle));
+    srand((unsigned int)cpu_cycle);
     int row, col;
     char color = player.get_color();
     bool find = false;
@@ -273,6 +275,52 @@ void algorithm_A(Board board, Player player, int index[]){
                         col=j;
                     }
 
+                }
+            }
+        }
+    }
+
+    if(!find){
+        for(int i=0;i<5;i++){
+            for(int j=0;j<6;j++){
+                if(board.get_cell_color(i,j)==color && board.get_orbs_num(i,j)!=maxorb[i][j]){
+                    if(i-1>=0){
+                        if(board.get_cell_color(i-1,j)!=color && board.get_cell_color(i-1,j)!='w' 
+                        && (board.get_capacity(i-1,j)-board.get_orbs_num(i-1,j))<(board.get_capacity(i,j)-board.get_orbs_num(i,j)))
+                        {
+                            continue;
+                        }
+                    }
+                    if(i+1<=4){
+                        if(board.get_cell_color(i+1,j)!=color && board.get_cell_color(i+1,j)!='w' 
+                        && (board.get_capacity(i+1,j)-board.get_orbs_num(i+1,j))<(board.get_capacity(i,j)-board.get_orbs_num(i,j)))
+                        {
+                            continue;
+                        }
+                    }
+                    if(j-1>=0){
+                        if(board.get_cell_color(i,j-1)!=color && board.get_cell_color(i,j-1)!='w' 
+                        && (board.get_capacity(i,j-1)-board.get_orbs_num(i,j-1))<(board.get_capacity(i,j)-board.get_orbs_num(i,j)))
+                        {
+                            continue;
+                        }
+                    }
+                    if(j+1<=5){
+                        if(board.get_cell_color(i,j+1)!=color && board.get_cell_color(i,j+1)!='w' 
+                        && (board.get_capacity(i,j+1)-board.get_orbs_num(i,j+1))<(board.get_capacity(i,j)-board.get_orbs_num(i,j)))
+                        {
+                            continue;
+                        }
+                    }
+                    if(!find){
+                        row=i;
+                        col=j;
+                        find=true;
+                    }
+                    else if(board.get_capacity(i,j)<board.get_capacity(row,col)){
+                        row=i;
+                        col=j;
+                    }
                 }
             }
         }
