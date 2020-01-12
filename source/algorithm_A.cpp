@@ -51,8 +51,8 @@ void algorithm_A(Board board, Player player, int index[]){
     };
     
     if(board.get_cell_color(0,0)==color){
-        if((board.get_cell_color(0,1)!=color && board.get_cell_color(0,1)!='w') ||
-            (board.get_cell_color(1,0)!=color && board.get_cell_color(1,0)!='w'))            
+        if((board.get_cell_color(0,1)!=color && board.get_cell_color(0,1)!='w') && board.get_orbs_num(0,1)==2 ||
+            (board.get_cell_color(1,0)!=color && board.get_cell_color(1,0)!='w' && board.get_orbs_num(1,0)==2))            
         {
             row=0;
             col=0;
@@ -60,8 +60,8 @@ void algorithm_A(Board board, Player player, int index[]){
         }
     }
     if(!find && board.get_cell_color(0,5)==color){
-        if((board.get_cell_color(0,4)!=color && board.get_cell_color(0,4)!='w') ||
-            (board.get_cell_color(1,5)!=color && board.get_cell_color(1,5)!='w'))
+        if((board.get_cell_color(0,4)!=color && board.get_cell_color(0,4)!='w' && board.get_orbs_num(0,4)==2) ||
+            (board.get_cell_color(1,5)!=color && board.get_cell_color(1,5)!='w' && board.get_orbs_num(1,5)==2))
         {
             row=0;
             col=5;
@@ -69,8 +69,8 @@ void algorithm_A(Board board, Player player, int index[]){
         }
     }
     if(!find && board.get_cell_color(4,0)==color){
-        if((board.get_cell_color(4,1)!=color && board.get_cell_color(4,1)!='w') ||
-            (board.get_cell_color(3,0)!=color && board.get_cell_color(3,0)!='w'))
+        if((board.get_cell_color(4,1)!=color && board.get_cell_color(4,1)!='w' && board.get_orbs_num(4,1)==2) ||
+            (board.get_cell_color(3,0)!=color && board.get_cell_color(3,0)!='w' && board.get_orbs_num(3,0)==2))
         {
             row=4;
             col=0;
@@ -78,15 +78,15 @@ void algorithm_A(Board board, Player player, int index[]){
         }
     }
     if(!find && board.get_cell_color(4,5)==color){
-        if((board.get_cell_color(4,4)!=color && board.get_cell_color(4,4)!='w') ||
-            (board.get_cell_color(3,5)!=color && board.get_cell_color(3,5)!='w'))
+        if((board.get_cell_color(4,4)!=color && board.get_cell_color(4,4)!='w' && board.get_orbs_num(4,4)==2) ||
+            (board.get_cell_color(3,5)!=color && board.get_cell_color(3,5)!='w' && board.get_orbs_num(3,5)==2))
         {
             row=4;
             col=5;
             find=true;
         }
     }
-
+/*
     if(!find && board.get_cell_color(0,0)=='w'){
         if((board.get_cell_color(0,1)=='w' || board.get_cell_color(0,1)==color) &&
         (board.get_cell_color(1,0)=='w' || board.get_cell_color(1,0)==color))
@@ -151,6 +151,7 @@ void algorithm_A(Board board, Player player, int index[]){
             find=true;
         }
     }
+*/
     int currentexplosion=0;
     if(!find){
         for(int i=0;i<5;i++){
@@ -159,30 +160,30 @@ void algorithm_A(Board board, Player player, int index[]){
                 if(board.get_cell_color(i,j)==color){
                     int explosion=0;
                     if(i-1>=0 && board.get_cell_color(i-1,j)!=color && board.get_cell_color(i-1,j)!='w'){
-                        if((maxorb[i][j]-board.get_orbs_num(i,j))==(maxorb[i-1][j]-board.get_orbs_num(i-1,j)))
+                        if((board.get_capacity(i,j)-board.get_orbs_num(i,j))==(board.get_capacity(i-1,j)-board.get_orbs_num(i-1,j)))
                             explosion++;
-                        else if((maxorb[i][j]-board.get_orbs_num(i,j))>(maxorb[i-1][j]-board.get_orbs_num(i-1,j)))
+                        else if((board.get_capacity(i,j)-board.get_orbs_num(i,j))>(board.get_capacity(i-1,j)-board.get_orbs_num(i-1,j)))
                             continue;
                     }
 
                     if(i+1<=4 && board.get_cell_color(i+1,j)!=color && board.get_cell_color(i+1,j)!='w'){
-                        if((maxorb[i][j]-board.get_orbs_num(i,j))==(maxorb[i+1][j]-board.get_orbs_num(i+1,j)))
+                        if((board.get_capacity(i,j)-board.get_orbs_num(i,j))==(board.get_capacity(i+1,j)-board.get_orbs_num(i+1,j)))
                             explosion++;
-                        else if((maxorb[i][j]-board.get_orbs_num(i,j))>(maxorb[i-1][j]-board.get_orbs_num(i-1,j)))
+                        else if((board.get_capacity(i,j)-board.get_orbs_num(i,j))>(board.get_capacity(i+1,j)-board.get_orbs_num(i+1,j)))
                             continue;
                     }
 
                     if(j-1>=0 && board.get_cell_color(i,j-1)!=color && board.get_cell_color(i,j-1)!='w'){
-                        if((maxorb[i][j]-board.get_orbs_num(i,j))==(maxorb[i][j-1]-board.get_orbs_num(i,j-1)))
+                        if((board.get_capacity(i,j)-board.get_orbs_num(i,j))==(board.get_capacity(i,j-1)-board.get_orbs_num(i,j-1)))
                             explosion++;
-                        else if((maxorb[i][j]-board.get_orbs_num(i,j))>(maxorb[i][j-1]-board.get_orbs_num(i,j-1)))
+                        else if((board.get_capacity(i,j)-board.get_orbs_num(i,j))>(board.get_capacity(i,j-1)-board.get_orbs_num(i,j-1)))
                             continue;
                     }
 
                     if(j+1<=5 && board.get_cell_color(i,j+1)!=color && board.get_cell_color(i,j+1)!='w'){
-                        if((maxorb[i][j]-board.get_orbs_num(i,j))==(maxorb[i][j+1]-board.get_orbs_num(i,j+1)))
+                        if((board.get_capacity(i,j)-board.get_orbs_num(i,j))==(board.get_capacity(i,j+1)-board.get_orbs_num(i,j+1)))
                             explosion++;
-                        else if((maxorb[i][j]-board.get_orbs_num(i,j))>(maxorb[i][j+1]-board.get_orbs_num(i,j+1)))
+                        else if((board.get_capacity(i,j)-board.get_orbs_num(i,j))>(board.get_capacity(i,j+1)-board.get_orbs_num(i,j+1)))
                             continue;
                     }
                     
@@ -193,7 +194,7 @@ void algorithm_A(Board board, Player player, int index[]){
                         find=true;
                     }
                     else if(explosion!=0 && explosion==currentexplosion){
-                        if(maxorb[i][j]<maxorb[row][col]){
+                        if(board.get_capacity(i,j)<board.get_capacity(row,col)){
                             row=i;
                             col=j;
                         }
@@ -203,6 +204,7 @@ void algorithm_A(Board board, Player player, int index[]){
             }
         }
     }
+
     int currentk=0;
     if(!find){
         for(int i=0;i<5;i++){
@@ -210,34 +212,40 @@ void algorithm_A(Board board, Player player, int index[]){
                 if(board.get_cell_color(i,j)=='w'){
                     int k=0;
                     if(i-1>=0 && board.get_cell_color(i-1,j)!='w' && board.get_cell_color(i-1,j)!=color){
-                        if((maxorb[i-1][j]-board.get_orbs_num(i-1,j))<(maxorb[i][j]-board.get_orbs_num(i,j))){
+                        if((board.get_capacity(i-1,j)-board.get_orbs_num(i-1,j))<(board.get_capacity(i,j)-board.get_orbs_num(i,j))){
                             continue;
                         }
                         k++;
                     }
                     if(i+1<=4 && board.get_cell_color(i+1,j)!='w' && board.get_cell_color(i+1,j)!=color){
-                        if((maxorb[i+1][j]-board.get_orbs_num(i+1,j))<(maxorb[i][j]-board.get_orbs_num(i,j))){
+                        if((board.get_capacity(i+1,j)-board.get_orbs_num(i+1,j))<(board.get_capacity(i,j)-board.get_orbs_num(i,j))){
                             continue;
                         }
                         k++;
                     } 
                     if(j+1<=5 && board.get_cell_color(i,j+1)!='w' && board.get_cell_color(i,j+1)!=color){
-                        if((maxorb[i][j+1]-board.get_orbs_num(i,j+1))<(maxorb[i][j]-board.get_orbs_num(i,j))){
+                        if((board.get_capacity(i,j+1)-board.get_orbs_num(i,j+1))<(board.get_capacity(i,j)-board.get_orbs_num(i,j))){
                             continue;
                         }
                         k++;
                     }
                     if(j-1>=0 && board.get_cell_color(i,j-1)!='w' && board.get_cell_color(i,j-1)!=color){
-                        if((maxorb[i][j-1]-board.get_orbs_num(i,j-1))<(maxorb[i][j]-board.get_orbs_num(i,j))){
+                        if((board.get_capacity(i,j-1)-board.get_orbs_num(i,j-1))<(board.get_capacity(i,j)-board.get_orbs_num(i,j))){
                             continue;
                         }
                         k++;
                     }
-                    if(!find || k>currentk){ 
+                    if(k>currentk){ 
                         row=i;
                         col=j;
                         currentk=k;
                         find=true;
+                    }
+                    else if(k!=0 && k==currentk){
+                        if(board.get_capacity(i,j)<board.get_capacity(row,col)){    
+                            row=i;
+                            col=j;
+                        }
                     }
                 }       
                 
@@ -283,7 +291,7 @@ void algorithm_A(Board board, Player player, int index[]){
     if(!find){
         for(int i=0;i<5;i++){
             for(int j=0;j<6;j++){
-                if(board.get_cell_color(i,j)==color && board.get_orbs_num(i,j)!=maxorb[i][j]){
+                if(board.get_cell_color(i,j)==color && board.get_orbs_num(i,j)!=board.get_capacity(i,j)-1){
                     if(i-1>=0){
                         if(board.get_cell_color(i-1,j)!=color && board.get_cell_color(i-1,j)!='w' 
                         && (board.get_capacity(i-1,j)-board.get_orbs_num(i-1,j))<(board.get_capacity(i,j)-board.get_orbs_num(i,j)))
